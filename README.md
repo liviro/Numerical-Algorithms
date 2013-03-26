@@ -33,3 +33,35 @@ large number of helper methods).
 Currently, the recursive methods (Strassen and the classic recursive) only support multiplication of square
 matrices of dimensions that are a power of 2, but this restriction may be lifted by modifying the helper 
 methods that split / combine matrices into smaller / bigger ones, respectively.
+
+
+monte-carlo.py
+--------------
+
+Monte Carlo method for evaluating high-dimensional integrals. This program does it only for 3 dimensions, but
+could easily be extrapolated into higher ones. This algorithm works by randomly sampling values of the 
+function that's being integrated in the integral interval, summing these samples, multiplying by the volume
+of the box that's being integrated over (assume cartesian coordinate system), and then divided by the number of
+sample points taken. Contrast this with the classical way integrals are defined. 
+
+Why is randomness necessary? Assume that the integral is over 360 dimensions (think of 30 a year mortgage with 
+montly payments). A way to calculate the integral (from here on, calculate = approximate, as these integrals
+aren't being solved analytically) is to establish a grid of desired finesse, calculate the function values at 
+these points, add them up, multiply by the volume of the "box" of integration, then divide by number of sample 
+points. The horror comes up when we start discovering how many evaluations are actually necessary. Assume 
+without loss of generality that the integration is done over a box with all side lengths of length 1 (scaling),
+and that we have a grid in which there are m gridpoints in each unit of length. Let's make this example coarse, 
+and have m=2. We would have to do 2^360 evaluations for this example. Assume that each each evaluation takes 
+2^(-36) seconds (which is already very optimistic). Then it would still take 2^(324) seconds, which is longer
+than the age of the universe. There is no way to break this so-called curse of dimensionality by a clever 
+algorithm, because this exponential complexity is a property of the problem. 
+
+Randomness breaks the curse by replacing the error by an expected error. In this particular example, 
+expected error = sqrt( var(f) / n ) (where var is the variance of the function, and n is the number of points 
+used for the sampling). Note that the error may be greater than the expected error! (Although the probability
+of that is relatively low, and is given by the Chebyshev inequality). 
+
+Randomness? There are different ways to go about that. This program allows for both truly random sample points, 
+as well as pseudo-random sample points. The truly random points are gotten by requesting random bits from 
+random.org (careful, you have only a limited amount of random bits available every day!), and the pseudo-random
+are gotten from Python's random library. TODO: explore using /dev/random, per Felix Sheng's suggestion. 
