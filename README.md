@@ -69,3 +69,5 @@ from the OS. In UNIX-based systems, this draws from /dev/urandom, and on Windows
 is easily done using the os.urandom() method of Python (which was introduced in v. 2.4), which, in turn, is used
 by the SystemRandom() class of the random library of Python. Note that this method may not work for some 
 obscure operating systems.
+
+TODO: Quasi-Monte Carlo (using low-discrepancy sequences).
