@@ -15,7 +15,7 @@ def randInIntvl(randomList, low, high):
     return diff*randomList.pop()+low
 
 # Returns a list 3*n of truly random numbers from random.org, range (0, 1)
-def getRandom(n):
+def getRandomOrgRandom(n):
     hdr= { 'User-Agent' : 'Monte Carlo integrator, by polina.viro@gmail.com'}
     conn = httplib.HTTPConnection('www.random.org')
     randList = []
@@ -36,12 +36,16 @@ def getPseudoRandom(n):
         prList.append(random.random())
     return prList
 
-# Main method that'll do the integration
-def monteCarlo(f,n,a1,b1,a2,b2,a3,b3, trulyRandom=False):
-    if trulyRandom:
-        randList = getRandom(n)
-    else:
-        randList = getPseudoRandom(n)
+# Returns a list of 3*n truly random numbers from the OS (may not always be available...)
+def getSystemRandom(n):
+    prList= []
+    for i in range(3*n):
+        prList.append(random.SystemRandom().random())
+    return prList
+
+# Main method that'll do the integration. Note that last input is the name of the randomness method!
+def monteCarlo(f,n,a1,b1,a2,b2,a3,b3, randomMethod):
+    randList = randomMethod(n)
     s = 0                               
     vol = (b1-a1)*(b2-a2)*(b3-a3)
     for i in range(n):                

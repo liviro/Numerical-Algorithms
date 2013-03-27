@@ -64,4 +64,8 @@ of that is relatively low, and is given by the Chebyshev inequality).
 Randomness? There are different ways to go about that. This program allows for both truly random sample points, 
 as well as pseudo-random sample points. The truly random points are gotten by requesting random bits from 
 random.org (careful, you have only a limited amount of random bits available every day!), and the pseudo-random
-are gotten from Python's random library. TODO: explore using /dev/random, per Felix Sheng's suggestion. 
+are gotten from Python's random library. A new option was added: using (truly) random numbers that're generated
+from the OS. In UNIX-based systems, this draws from /dev/urandom, and on Windows, it uses CryptGenRandom. This
+is easily done using the os.urandom() method of Python (which was introduced in v. 2.4), which, in turn, is used
+by the SystemRandom() class of the random library of Python. Note that this method may not work for some 
+obscure operating systems.
