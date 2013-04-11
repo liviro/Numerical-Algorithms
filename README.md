@@ -71,3 +71,9 @@ by the SystemRandom() class of the random library of Python. Note that this meth
 obscure operating systems.
 
 TODO: Quasi-Monte Carlo (using low-discrepancy sequences).
+
+
+vibrating-string
+----------------
+
+This is the visualization of the numeric solution of the partial differential equation for a vibrating, 1-dimensional string. For more info, look at the readme of that folder.
