@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>PDE Solver</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="style.css">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+</head>
+
+<body>
+
+  <div id="content"  class="centered">
+    <h1>PDE Solver - Heat Equation</h1>
+
+    <p>This app solves the partial differential equation for the temperature of a thin rod of length 1:</p>
+    <div style="text-align: center;"><img src="http://latex.codecogs.com/svg.latex?\dfrac{\partial^2%20u}{\partial%20x^2}=\dfrac{\partial u}{\partial%20t}" /><br /><br />
+    <img src="http://latex.codecogs.com/svg.latex?u(x, 0) = \sin \pi x" /><br /><br />
+    <img src="http://latex.codecogs.com/svg.latex?u(0, t) = u(1, t) = 0" /></div>
+    <p><br/>
+    using an explicit, numerical, algorithm. To see how the rod's temperature changes over time, drag the slider. If you would like
+    to change the algorithm parameters, input the parameters that will change into the input boxes below and hit the "Redo!" button. The defaults are h = 0.1 (x-width), k = 0.005 (t-width), T = 1 (max time to solve until).
+    </p>
+    <div id="request" class="centered">
+      <input type="text" name="hInput" placeholder="h">
+      <input type="text" name="kInput" placeholder="k">
+      <input type="text" name="tInput" placeholder="T">
+      <button onclick="redraw()">Redo!</button>
+    </div>
+    <p class="error hide">Error! Widths don't add up nicely!</p>
+
+    <div id="canvas" class="centered"></div>
+    <div id="tselect" class="centered"></div>
+    <div id="tvalue">t = 0</div>
+    <div id="error">error = 0</div>
+    
+  </div>
+
+</body>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.0.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript" src="solver.js"></script>
+
+
+</html>
