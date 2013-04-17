@@ -73,7 +73,9 @@ obscure operating systems.
 TODO: Quasi-Monte Carlo (using low-discrepancy sequences).
 
 
-vibrating-string
-----------------
+PDE
+---
 
-This is the visualization of the numeric solution of the partial differential equation for a vibrating, 1-dimensional string. For more info, look at the readme of that folder.
+This is a series of solvers, both explicit and implicit, for some partial differential equations. They also provide
+a visualization for how the given system (vibrating string's y-position or temperature in a rod) change over time.
+For more details, see the readme of the folder.

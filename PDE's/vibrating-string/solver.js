@@ -1,8 +1,8 @@
 // initializing global variables...
 var h, k, t, table;
 
-// function that determines original position of string
-function getX(x){
+// function that determines original position of string (initial condition)
+function init(x){
 	if(x <= .5 && x >= 0){
 		return x;
 	}
@@ -11,9 +11,14 @@ function getX(x){
 	}
 }
 
+// function that gets the border condition of the string (fixed 0)
+function border(x){
+	return 0;
+}
+
 // main solver method. 
-// h = x-width, k = t-width, t = max. t, p = period of graphing
-function solver(funct, hIn, kIn, tIn){
+// h = x-width, k = t-width, t = max. t
+function solver(initCond, boundCond, hIn, kIn, tIn){
 	h = hIn;
 	k = kIn;
 	t = tIn;
@@ -23,18 +28,18 @@ function solver(funct, hIn, kIn, tIn){
 	// table creation & border condition population
 	for(var i = 0; i < tIntervals; i++) {
 		table[i] = new Array(xIntervals);
-		table[i][0] = 0;
-		table[i][xIntervals-1] = 0;
+		table[i][0] = border(i);
+		table[i][xIntervals-1] = border(i);
   	}
   	// initial condition population
   	for(var j = 0; j < xIntervals; j++){
-  		table[0][j] = funct(j*h);
+  		table[0][j] = initCond(j*h);
   	}
   	var rho = (k*k)/(h*h);
 
   	// set values for first time step
   	for(var pos = 1; pos < xIntervals-1; pos++){
-  		table[1][pos] = rho/2*(funct((pos+1)*h)+funct((pos-1)*h))+(1-rho)*funct(pos*h);
+  		table[1][pos] = rho/2*(initCond((pos+1)*h)+initCond((pos-1)*h))+(1-rho)*initCond(pos*h);
   	}
 
   	// set values for all following time steps
@@ -44,7 +49,7 @@ function solver(funct, hIn, kIn, tIn){
   		}
   	}
 
-	// prepare the table for graphing
+	// prepare the table for graphing: need both x-position and y-position now
 	for(var time = 0; time < tIntervals; time++){
 		for(var pos = 0; pos < xIntervals; pos++){
 			table[time][pos] = [pos*h, table[time][pos]];
@@ -54,12 +59,13 @@ function solver(funct, hIn, kIn, tIn){
 	// hack needed for redrawing
 	var circles = svg.selectAll('circle').remove()
 
-	// insert circles into graph
+	// insert the points into graph
 	circles = svg.selectAll('circle')
 		.data(table[0])
 	    .enter()
 	    .append('circle');
 
+	// set their appropriate attributes (x & y position, radius, CSS class)
 	circles.attr('cx', function(d){return scaleX(d[0]);})
 	  .attr('cy', function(d){return scaleY(d[1]);})
 	  .attr('r', 3)
@@ -101,7 +107,7 @@ var axisY = svg.append("g")
 		.orient("left")
     	.ticks(5));
 
-// functions that deals with the slider
+// functions that deals with the slider (changing the y-position of the points)
 function changeT(time){
 	var tTransf = (time/k).toFixed(0);
 	var points = d3.selectAll('.point')
@@ -129,12 +135,13 @@ function redraw(){
 		}
 	}
 
-	table = [];
-	solver(getX, hIn, kIn, tIn);
+	// get the new table
+	solver(init, border, hIn, kIn, tIn);
 	
 	// also need to update slider
 	$('#tselect').slider("option", "max", t)
-		.slider('option', 'step', k);
+		.slider('option', 'step', k)
+		.slider('option', 'value',0);
 }
 
 
@@ -142,7 +149,7 @@ function redraw(){
 $(document).ready(function(){
 
 	// initially solve for some values
-	solver(getX, 0.05, 0.01, 2)
+	solver(init, border, 0.05, 0.01, 2)
 
 	// initialize the slider
     $("#tselect").slider({

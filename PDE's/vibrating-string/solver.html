@@ -15,13 +15,16 @@
 <body>
 
   <div id="content"  class="centered">
-    <h1>PDE Solver</h1>
+    <h1>PDE Solver - Vibrating String</h1>
 
     <p>This app solves the partial differential equation for a vibrating string: </p>
-    <div style="text-align: center;"><img src="http://latex.codecogs.com/svg.latex?\dfrac{\partial^2%20u}{\partial%20x^2}=\dfrac{\partial^2%20u}{\partial%20t^2}" /></div>
+    <div style="text-align: center;"><img src="http://latex.codecogs.com/svg.latex?\dfrac{\partial^2%20u}{\partial%20x^2}=\dfrac{\partial^2%20u}{\partial%20t^2}" /> <br /><br />
+    <img src="http://latex.codecogs.com/svg.latex?u(t, 0)=u(t,1)=0" /><br /><br />
+    <img src="http://latex.codecogs.com/svg.latex?u(0, x)=\left\{\begin{array}{l l}x & \quad 0\leqslant x \leqslant 0.5\\
+    1-x & \quad 0.5 \leqslant x \leqslant 1\end{array} \right." />
+    </div>
     <p><br/>
-    using an explicit, numerical, algorithm. To see how the string's position changes over time, drag the slider. If you would like
-    to change the algorithm parameters, input the parameters that will change into the input boxes below and hit the "Redo!" button. The defaults are h = 0.05 (x-width), k = 0.01 (t-width), T = 2 (max time to solve until).
+    using an explicit, numerical, algorithm. It discretizes the equations and then solves the equation for each position and timestep, using the y-position from the previous time steps. To see how the string's position changes over time, drag the slider. If you would like to change the algorithm parameters, input the parameters that will change into the input boxes below and hit the "Redo!" button. The defaults are h = 0.05 (x-width), k = 0.01 (t-width), T = 2 (max time to solve until).
     </p>
     <div id="request" class="centered">
       <input type="text" name="hInput" placeholder="h">
